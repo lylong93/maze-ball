@@ -4,12 +4,15 @@ class Wall {
     this.y = y;
     this.r = r;
     this.sAngle = 0;
-    this.eAngle = Math.PI * 2;
+    this.eAngle =((2 * Math.PI) / 360) * 290
   }
-  getx(radius) {
-    let _y = Math.cos(radius) * (this.r-5) + this.y;
-    let _x = Math.sin(radius) * (this.r-5)+ this.x;
-    return { _x, _y };
+  getAxis(rad) {
+    // console.log(rad)
+    // let w_y = Math.cos(rad) * (this.r-5) + this.y;
+    // let w_x = Math.sin(rad) * (this.r-5)+ this.x;
+    let w_y = Math.sin(rad) * (this.r-5) + this.y;
+    let w_x = Math.cos(rad) * (this.r-5)+ this.x;
+    return { w_x, w_y };
   }
 }
 

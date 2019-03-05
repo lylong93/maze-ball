@@ -5,6 +5,8 @@ class Wall {
     this.r = r;
     this.sAngle = 0;
     this.eAngle =((2 * Math.PI) / 360) * 290
+
+    this.doors = []
   }
   getAxis(rad) {
     // console.log(rad)
@@ -13,6 +15,9 @@ class Wall {
     let w_y = Math.sin(rad) * (this.r-5) + this.y;
     let w_x = Math.cos(rad) * (this.r-5)+ this.x;
     return { w_x, w_y };
+  }
+  getDoors() {
+    
   }
 }
 

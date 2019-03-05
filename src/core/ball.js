@@ -28,6 +28,9 @@ class Ball {
   changeSpeed(speed) {
     this.speed = speed;
   }
+  changeDirection() {
+      
+  }
   stop() {
     this.x = this.x;
     this.y = this.y;

@@ -22,7 +22,7 @@ let init = world => {
     // walls.push(new Wall(width/2,height/2,height/2.5))
     // walls.push(new Wall(width/2,height/2,height/2.1))
 
-    let ball = new Ball(105, height / 2, 30);
+    let ball = new Ball(130, height / 2, 30);
     // draw(walls,ball)
     let animation = () => {
       draw(world, walls, ball);

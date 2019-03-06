@@ -16,14 +16,14 @@ let draw = (canvas, walls, ball) => {
     ctx.arc(item.x, item.y, item.r, item.sAngle, item.eAngle, false);
     ctx.stroke();
 
-    let o = ((Math.PI) / 360) * 30;
+    let o = (2*(Math.PI) / 360) * 290;
 
     let ww = item.getAxis(o);
 
     ctx.fillStyle = 'red';
     ctx.beginPath();
     ctx.arc(ww.w_x, ww.w_y, 5, 0, 2* Math.PI, false);
-    ctx.fill();
+    // ctx.fill();
   });
 
  

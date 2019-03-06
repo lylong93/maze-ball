@@ -9,7 +9,7 @@ let _rformat = radian => {
   return radian / ((2 * Math.PI) / 360);
 };
 
-let angle = 70;
+let angle = 142;
 
 let rad = _format(angle);
 
@@ -64,16 +64,16 @@ let _detect = (ball, wall, w) => {
   let d = Math.sqrt(_x * _x + _y * _y);
   let o = Math.abs(ball.r - wall.r);
 
-  if (d >= o) {
+  if(d < o) {
+    ball.cin()
+  }
+  if (d >= o&&!ball.out) {
     // debugger
     let rr = Math.abs(wall.y - ball.y);
     let ang = rr / d;
     let _a = Math.asin(ang);
 
-    // console.log(_a)
-    // console.log(_rformat(_a))
     let dd;
-
 
     // 判断球落方向点的角度
     if (angle > 180) {
@@ -93,16 +93,35 @@ let _detect = (ball, wall, w) => {
       }
     }
 
-    // 门判断
+    // console.log(wall.lin)
+    //  门判断
     if (dd > 300) {
-      return false;
+      // debugger
+      // console.log(wall.lin)
+      let lin = wall.lin
+      
+      let _xx =  Math.abs(lin.w_x - ball.x)
+      let _yy =  Math.abs(lin.w_y - ball.y)
+
+      let _dd = Math.sqrt(_xx * _xx + _yy * _yy);
+      console.log(_dd)
+      if(_dd<ball.r) {
+        // debugger
+      
+        ball.cout()
+        return true;
+    
+      } else {
+        return false;
+      }
+      
     }
     // if(dd >= 300 && dd <= 360) {
     //   return false;
     // }else {
     return true;
     // }
-  }
+  } 
   return false;
 };
 // 触发碰撞

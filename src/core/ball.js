@@ -15,6 +15,8 @@ class Ball {
       s: "#fff",
       e: "rgb(191,173,111)"
     };
+
+    this.out = false
   }
   run(rad) {
     this.x = this.x + Math.cos(rad) * this.speed;
@@ -34,6 +36,12 @@ class Ball {
   stop() {
     this.x = this.x;
     this.y = this.y;
+  }
+  cout() {
+    this.out = true
+  }
+  cin() {
+    this.out = false
   }
 }
 

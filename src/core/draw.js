@@ -5,7 +5,6 @@ let draw = (canvas, walls, ball) => {
 
   let ctx = canvas.getContext("2d");
 
-
   // 清除画布
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -16,14 +15,15 @@ let draw = (canvas, walls, ball) => {
     ctx.arc(item.x, item.y, item.r, item.sAngle, item.eAngle, false);
     ctx.stroke();
 
-    let o = (2*(Math.PI) / 360) * 290;
+    let o = (2*(Math.PI) / 360) * 180;
 
-    let ww = item.getAxis(o);
-
+    // let ww = item.getAxis(o);
+    let door = item.doors[0]
     ctx.fillStyle = 'red';
     ctx.beginPath();
-    ctx.arc(ww.w_x, ww.w_y, 5, 0, 2* Math.PI, false);
-    // ctx.fill();
+    ctx.arc(door.sAxis.w_x, door.sAxis.w_y, 5, 0, 2* Math.PI, false);
+    // ctx.arc(item.lin.w_x, item.lin.w_y, 5, 0, 2* Math.PI, false);
+    ctx.fill();
   });
 
  

@@ -15,8 +15,11 @@ class Ball {
       s: "#fff",
       e: "rgb(191,173,111)"
     };
+    this.out = false;
 
-    this.out = false
+    this.cneterD;
+
+    this.state; // 状态值
   }
   run(rad) {
     this.x = this.x + Math.cos(rad) * this.speed;
@@ -42,6 +45,13 @@ class Ball {
   }
   cin() {
     this.out = false
+  }
+  // 圆心距
+  getCenterDistance (center){
+    let {x,y} = center;
+    let _x = Math.abs(this.x - x)
+    let _y = Math.abs(this.x - y)
+    this.cneterD = Math.sqrt(_x * _x + _y * _y)
   }
 }
 

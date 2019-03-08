@@ -8,7 +8,6 @@ let rad = _format(angle);
 
 let check = (walls, ball) => {
   let speed = 1;
-
   // 加权
   let weighed = 1;
 
@@ -57,13 +56,11 @@ let check = (walls, ball) => {
     ball.run(rad);
   }
 };
-
 //inswall
 let _detect = (ball, wall, inswall) => {
 
   //外壁
   //wall
-  // 5 壁宽
   let _x = Math.abs(wall.x - ball.x) + 5;
   let _y = Math.abs(wall.y - ball.y) + 5;
 
@@ -77,15 +74,12 @@ let _detect = (ball, wall, inswall) => {
   let id = Math.sqrt(_ix * _ix + _iy * _iy);
   let k = Math.abs(ball.r + inswall.r);
 
-
-  if (d < o) {
+  if (d < o && id > k) {
     ball.cin();
   }
-
-
+  
   // 内壁碰撞
   if (id <= k && !ball.out) {
-    // console.log("pp");
     let rr = Math.abs(inswall.y - ball.y);
     let ang = rr / d;
     let _a = Math.asin(ang);
@@ -133,7 +127,6 @@ let _detect = (ball, wall, inswall) => {
   }
  
   if (d >= o && !ball.out) {
-    // debugger
     let rr = Math.abs(wall.y - ball.y);
     let ang = rr / d;
     let _a = Math.asin(ang);
@@ -156,27 +149,26 @@ let _detect = (ball, wall, inswall) => {
         // dd = 180 - _rformat(_a);
       } else {
         dd = 180 - _rformat(_a);
-        // dd = _rformat(_a);
       }
     }
-    //  门判断
-    if (dd > 300) {
-      // debugger
-      let lin = wall.lin;
+    // //  门判断
+    // if (dd > 300) {
+    //   // debugger
+    //   let lin = wall.lin;
 
-      let _xx = Math.abs(lin.w_x - ball.x);
-      let _yy = Math.abs(lin.w_y - ball.y);
+    //   let _xx = Math.abs(lin.w_x - ball.x);
+    //   let _yy = Math.abs(lin.w_y - ball.y);
 
-      let _dd = Math.sqrt(_xx * _xx + _yy * _yy);
+    //   let _dd = Math.sqrt(_xx * _xx + _yy * _yy);
 
-      if (_dd < ball.r) {
-        // debugger
-        ball.cout();
-        return true;
-      } else {
-        return false;
-      }
-    }
+    //   if (_dd < ball.r) {
+    //     // debugger
+    //     ball.cout();
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // }
     return true;
   }
 
@@ -187,11 +179,9 @@ let _collision = () => {
   // 改变角度
   if (angle < 180) {
     angle = 180 + angle;
-    // console.log(angle);
     rad = _format(angle);
   } else {
     angle = angle - 180;
-    // console.log(angle);
     rad = _format(angle);
   }
 };

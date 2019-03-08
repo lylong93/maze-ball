@@ -9,7 +9,7 @@ let draw = (canvas, walls, ball) => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   walls.map(item => {
-    // console.log(item)
+
     ctx.beginPath();
     ctx.lineWidth = 10;
     ctx.arc(item.x, item.y, item.r, item.sAngle, item.eAngle, false);

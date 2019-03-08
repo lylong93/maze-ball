@@ -19,7 +19,7 @@ class Ball {
 
     this.cneterD;
 
-    this.state; // 状态值
+    this.state = 0; // 状态值 0 圈内, 1 边界
   }
   run(rad) {
     this.x = this.x + Math.cos(rad) * this.speed;
@@ -39,6 +39,9 @@ class Ball {
   stop() {
     this.x = this.x;
     this.y = this.y;
+  }
+  cState() {
+    this.state =1;
   }
   cout() {
     this.out = true

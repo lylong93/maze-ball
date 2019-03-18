@@ -2,7 +2,7 @@ import { _format, _rformat } from "./units";
 
 let s = true;
 
-let angle = 150;
+let angle = 0;
 
 let rad = _format(angle);
 
@@ -18,11 +18,11 @@ let check = (walls, ball) => {
   let Search = (ball, walls) => {
     let _wall;
     let _inswall;
+    // debugger
     for (let i = 0; i < walls.length; i++) {
       if (ball.cneterD < walls[i].r) {
         _wall = walls[i];
         _inswall = null;
-
         return { _wall, _inswall };
       }
       if (ball.cneterD > walls[i].r && ball.cneterD < walls[i + 1].r) {
@@ -33,21 +33,15 @@ let check = (walls, ball) => {
     }
   };
 
+  let flag 
   // 进环内重新计算
   if (!ball.out) {
+    // debugger
     let { _wall, _inswall } = Search(ball, walls);
     wall = _wall;
-    //  console.log(inswall)
     inswall = _inswall;
-    //  console.log(inswall)
+    flag = _detect(ball, wall, inswall);
   }
-
-  walls.map(item => {
-    // console.log(item.r)
-    wall = item;
-  });
-
-  let flag = _detect(ball, wall, inswall);
 
   if (flag) {
     _collision();
@@ -58,74 +52,77 @@ let check = (walls, ball) => {
 };
 //inswall
 let _detect = (ball, wall, inswall) => {
-
+  //  ball.cout();
   //外壁
   //wall
+  // debugger
   let _x = Math.abs(wall.x - ball.x) + 5;
   let _y = Math.abs(wall.y - ball.y) + 5;
 
   let d = Math.sqrt(_x * _x + _y * _y);
   let o = Math.abs(ball.r - wall.r);
 
-  //内壁
-  //inswall
-  let _ix = Math.abs(inswall.x - ball.x) - 5;
-  let _iy = Math.abs(inswall.y - ball.y) - 5;
-  let id = Math.sqrt(_ix * _ix + _iy * _iy);
-  let k = Math.abs(ball.r + inswall.r);
-
-  if (d < o && id > k) {
+  if (d < o) {
     ball.cin();
   }
-  
-  // 内壁碰撞
-  if (id <= k && !ball.out) {
-    let rr = Math.abs(inswall.y - ball.y);
-    let ang = rr / d;
-    let _a = Math.asin(ang);
-    
-    let dd;
-    if (angle < 180) {
-      // 下半球
-      if (ball.x > wall.x) {
-        // 右半球
-        dd = _rformat(_a);
-      } else {
-        dd = 180 + _rformat(_a);
-      }
-    } else {
-      // 上半球
-      if (ball.x > wall.x) {
-        // 右半球
-        dd = 360 - _rformat(_a);
-      } else {
-        //左半球
-        dd = 180 + _rformat(_a);
-      }
+  //debugger
+  //内壁
+  //inswall
+  if (inswall) {
+    let _ix = Math.abs(inswall.x - ball.x) - 5;
+    let _iy = Math.abs(inswall.y - ball.y) - 5;
+    let id = Math.sqrt(_ix * _ix + _iy * _iy);
+    let k = Math.abs(ball.r + inswall.r);
+    // ball.cout();
+    if (d < o && id > k) {
+      ball.cin();
     }
-    
-    let door = inswall.doors[0]
-    if (dd < door.eA && dd > door.sA) {
 
-      console.log(door)
-      let _xx = Math.abs(door.sAxis.w_x - ball.x);
-      let _yy = Math.abs(door.sAxis.w_y - ball.y);
+    // 内壁碰撞
+    if (id <= k && !ball.out) {
+      let rr = Math.abs(inswall.y - ball.y);
+      let ang = rr / d;
+      let _a = Math.asin(ang);
 
-      let _dd = Math.sqrt(_xx * _xx + _yy * _yy);
-
-      if (_dd < ball.r) {
-        // debugger
-        console.log('触发')
-        // ball.cout();
-        return true;
+      let dd;
+      if (angle < 180) {
+        // 下半球
+        if (ball.x > wall.x) {
+          // 右半球
+          dd = _rformat(_a);
+        } else {
+          dd = 180 + _rformat(_a);
+        }
       } else {
+        // 上半球
+        if (ball.x > wall.x) {
+          // 右半球
+          dd = 360 - _rformat(_a);
+        } else {
+          //左半球
+          dd = 180 + _rformat(_a);
+        }
+      }
+
+      let door = inswall.doors[0];
+
+      if (dd < door.eA && dd > door.sA) {
+        let _xx = Math.abs(door.eAxis.w_x - ball.x);
+        let _yy = Math.abs(door.eAxis.w_y - ball.y);
+
+        let _dd = Math.sqrt(_xx * _xx + _yy * _yy);
+
+        // if (_dd < ball.r) {
+        //   return true;
+        // } else {
         return false;
+        // }
+      } else {
+        return true;
       }
     }
-
-    return true;
   }
- 
+
   if (d >= o && !ball.out) {
     let rr = Math.abs(wall.y - ball.y);
     let ang = rr / d;
@@ -169,11 +166,13 @@ let _detect = (ball, wall, inswall) => {
     //     return false;
     //   }
     // }
+
     return true;
   }
 
   return false;
 };
+
 // 触发碰撞
 let _collision = () => {
   // 改变角度

@@ -33,9 +33,6 @@ class Ball {
   changeSpeed(speed) {
     this.speed = speed;
   }
-  changeDirection() {
-      
-  }
   stop() {
     this.x = this.x;
     this.y = this.y;
@@ -53,7 +50,7 @@ class Ball {
   getCenterDistance (center){
     let {x,y} = center;
     let _x = Math.abs(this.x - x)
-    let _y = Math.abs(this.x - y)
+    let _y = Math.abs(this.y - y)
     this.cneterD = Math.sqrt(_x * _x + _y * _y)
   }
 }

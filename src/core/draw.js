@@ -21,12 +21,13 @@ let draw = (canvas, walls, ball) => {
     let door = item.doors[0]
     ctx.fillStyle = 'red';
     ctx.beginPath();
-    ctx.arc(door.sAxis.w_x, door.sAxis.w_y, 5, 0, 2* Math.PI, false);
-    // ctx.arc(item.lin.w_x, item.lin.w_y, 5, 0, 2* Math.PI, false);
+
+    // ctx.arc(door.eAxisOut.w_x, door.eAxisOut.w_y, 5, 0, 2* Math.PI, false);
+    ctx.arc(door.eAxis.w_x, door.eAxis.w_y, 5, 0, 2* Math.PI, false);
+
     ctx.fill();
   });
 
- 
   let grd = ctx.createRadialGradient(ball.Gx, ball.Gy, 1, ball.Gx, ball.Gy, 40);
   grd.addColorStop(0, ball.colors.s);
   grd.addColorStop(1, ball.colors.e);

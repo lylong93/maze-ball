@@ -19,14 +19,17 @@ let init = world => {
     walls.push(new Wall(width / 2, height / 2, height / 10, 150, 220));
     walls.push(new Wall(width / 2, height / 2, height / 3, 300, 360));
 
-    let ball = new Ball(130, height / 2, 10);
+    let ball = new Ball(100, height / 2, 10);
+
     let center = {
       x: width / 2,
       y: height / 2
     };
-    ball.getCenterDistance(center);
+  
     // 圆心
     let animation = () => {
+  
+      ball.getCenterDistance(center);
       draw(world, walls, ball);
       window.requestAnimationFrame(animation);
     };

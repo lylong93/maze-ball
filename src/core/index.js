@@ -16,10 +16,12 @@ let init = world => {
 
     let walls = [];
 
-    walls.push(new Wall(width / 2, height / 2, height / 10, 150, 220));
-    walls.push(new Wall(width / 2, height / 2, height / 3, 300, 360));
+    walls.push(new Wall(width / 2, height / 2, height / 10, 130, 220));
+    // walls.push(new Wall(width / 2, height / 2, height / 6, 300, 360));
+    walls.push(new Wall(width / 2, height / 2, height / 5, 180, 240));
+    walls.push(new Wall(width / 2, height / 2, height / 3, 360, 360));
 
-    let ball = new Ball(100, height / 2, 10);
+    let ball = new Ball(107, 170, 10);
 
     let center = {
       x: width / 2,

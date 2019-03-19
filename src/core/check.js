@@ -1,47 +1,51 @@
 import { _format, _rformat } from "./units";
 
-let s = true;
-
 let angle = 0;
-
 let rad = _format(angle);
 
 let check = (walls, ball) => {
-  let speed = 1;
+  //  ball.cout();
+  // let speed = 1;
   // 加权
-  let weighed = 1;
+  // let weighed = 1;
 
   let wall;
   let inswall;
 
   // 环范围
   let Search = (ball, walls) => {
-    let _wall;
-    let _inswall;
+    let _wall ;
+    let _inswall ;
     // debugger
+    if (ball.cneterD+5 < walls[0].r-5) {
+      _wall = walls[0];
+      _inswall = null;
+      return { _wall, _inswall };
+    }
     for (let i = 0; i < walls.length; i++) {
-      if (ball.cneterD < walls[i].r) {
-        _wall = walls[i];
-        _inswall = null;
-        return { _wall, _inswall };
-      }
-      if (ball.cneterD > walls[i].r && ball.cneterD < walls[i + 1].r) {
+      if (ball.cneterD-5 > walls[i].r+5 && ball.cneterD+5 < walls[i + 1].r-5) {
         _inswall = walls[i];
         _wall = walls[i + 1];
         return { _wall, _inswall };
-      }
+      } 
     }
+    return { _wall, _inswall };
   };
 
-  let flag 
   // 进环内重新计算
-  if (!ball.out) {
+  // if (!ball.out) {
     // debugger
-    let { _wall, _inswall } = Search(ball, walls);
-    wall = _wall;
-    inswall = _inswall;
-    flag = _detect(ball, wall, inswall);
-  }
+  let { _wall, _inswall } = Search(ball, walls);
+
+  wall = _wall;
+  inswall = _inswall;
+  debugger
+  if(!wall&&!inswall) {
+    ball.run(rad);
+    return
+  } 
+
+  let flag = _detect(ball, wall, inswall);
 
   if (flag) {
     _collision();
@@ -50,38 +54,22 @@ let check = (walls, ball) => {
     ball.run(rad);
   }
 };
+
 //inswall
 let _detect = (ball, wall, inswall) => {
-  //  ball.cout();
-  //外壁
-  //wall
-  // debugger
-  let _x = Math.abs(wall.x - ball.x) + 5;
-  let _y = Math.abs(wall.y - ball.y) + 5;
-
-  let d = Math.sqrt(_x * _x + _y * _y);
-  let o = Math.abs(ball.r - wall.r);
-
-  if (d < o) {
-    ball.cin();
-  }
-  //debugger
   //内壁
   //inswall
   if (inswall) {
-    let _ix = Math.abs(inswall.x - ball.x) - 5;
-    let _iy = Math.abs(inswall.y - ball.y) - 5;
+    let _ix = Math.abs(inswall.x - ball.x);
+    let _iy = Math.abs(inswall.y - ball.y);
+
     let id = Math.sqrt(_ix * _ix + _iy * _iy);
-    let k = Math.abs(ball.r + inswall.r);
-    // ball.cout();
-    if (d < o && id > k) {
-      ball.cin();
-    }
+    let k = Math.abs(ball.r + inswall.r)+5;
 
     // 内壁碰撞
-    if (id <= k && !ball.out) {
+    if (id <= k ) {
       let rr = Math.abs(inswall.y - ball.y);
-      let ang = rr / d;
+      let ang = rr / id;
       let _a = Math.asin(ang);
 
       let dd;
@@ -103,27 +91,42 @@ let _detect = (ball, wall, inswall) => {
           dd = 180 + _rformat(_a);
         }
       }
-
       let door = inswall.doors[0];
-
+      // console.log(dd)
       if (dd < door.eA && dd > door.sA) {
-        let _xx = Math.abs(door.eAxis.w_x - ball.x);
-        let _yy = Math.abs(door.eAxis.w_y - ball.y);
+        let _xx = Math.abs(door.sAxisOut.w_x - ball.x);
+        let _yy = Math.abs(door.sAxisOut.w_y - ball.y);
 
         let _dd = Math.sqrt(_xx * _xx + _yy * _yy);
 
-        // if (_dd < ball.r) {
-        //   return true;
-        // } else {
-        return false;
-        // }
+        let _xxe = Math.abs(door.eAxisOut.w_x - ball.x);
+        let _yye = Math.abs(door.eAxisOut.w_y - ball.y);
+
+        // let _dd = Math.sqrt(_xx * _xx + _yy * _yy);
+        let _dde = Math.sqrt(_xxe * _xxe + _yye * _yye);
+
+        if (_dd <= ball.r || _dde <= ball.r) {
+
+          return true;
+        } else {
+          return false;
+        }
       } else {
+        // console.log(dd)
         return true;
       }
     }
   }
 
-  if (d >= o && !ball.out) {
+  //外壁
+  //wall
+  let _x = Math.abs(wall.x - ball.x)
+  let _y = Math.abs(wall.y - ball.y)
+
+  let d = Math.sqrt(_x * _x + _y * _y);
+  let o = Math.abs(ball.r - wall.r)-5;
+
+  if (d >= o ) {
     let rr = Math.abs(wall.y - ball.y);
     let ang = rr / d;
     let _a = Math.asin(ang);
@@ -148,26 +151,28 @@ let _detect = (ball, wall, inswall) => {
         dd = 180 - _rformat(_a);
       }
     }
-    // //  门判断
-    // if (dd > 300) {
-    //   // debugger
-    //   let lin = wall.lin;
+    // 门判断
+    let door = wall.doors[0];
+    // console.log(dd)
+    if (dd < door.eA && dd > door.sA) {
+      let _xx = Math.abs(door.sAxis.w_x - ball.x);
+      let _yy = Math.abs(door.sAxis.w_y - ball.y);
+      
+      let _xxe = Math.abs(door.eAxis.w_x - ball.x);
+      let _yye = Math.abs(door.eAxis.w_y - ball.y);
 
-    //   let _xx = Math.abs(lin.w_x - ball.x);
-    //   let _yy = Math.abs(lin.w_y - ball.y);
+      let _dd = Math.sqrt(_xx * _xx + _yy * _yy);
 
-    //   let _dd = Math.sqrt(_xx * _xx + _yy * _yy);
+      let _dde = Math.sqrt(_xxe * _xxe + _yye * _yye);
 
-    //   if (_dd < ball.r) {
-    //     // debugger
-    //     ball.cout();
-    //     return true;
-    //   } else {
-    //     return false;
-    //   }
-    // }
-
-    return true;
+      if (_dd < ball.r || _dde < ball.r) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
   }
 
   return false;

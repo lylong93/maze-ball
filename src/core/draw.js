@@ -22,8 +22,11 @@ let draw = (canvas, walls, ball) => {
     ctx.fillStyle = 'red';
     ctx.beginPath();
 
-    // ctx.arc(door.eAxisOut.w_x, door.eAxisOut.w_y, 5, 0, 2* Math.PI, false);
-    ctx.arc(door.eAxis.w_x, door.eAxis.w_y, 5, 0, 2* Math.PI, false);
+    // ctx.arc(door.sAxisOut.w_x, door.sAxisOut.w_y, 5, 0, 2* Math.PI, false);
+    // ctx.arc(door.sAxis.w_x, door.sAxis.w_y, 5, 0, 2* Math.PI, false);
+    // ctx.arc(door.sAxisOut.w_x, door.sAxisOut.w_y, 5, 0, 2* Math.PI, false);
+    // ctx.arc(door.eAxis.w_x, door.eAxis.w_y, 5, 0, 2* Math.PI, false);
+    
 
     ctx.fill();
   });

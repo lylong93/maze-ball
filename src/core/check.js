@@ -1,6 +1,6 @@
 import { _format, _rformat } from "./units";
 
-let angle = 0;
+let angle = 180;
 let rad = _format(angle);
 
 let check = (walls, ball) => {
@@ -17,13 +17,13 @@ let check = (walls, ball) => {
     let _wall ;
     let _inswall ;
     // debugger
-    if (ball.cneterD+5 < walls[0].r-5) {
+    if (ball.cneterD+10 < walls[0].r-5) {
       _wall = walls[0];
       _inswall = null;
       return { _wall, _inswall };
     }
     for (let i = 0; i < walls.length; i++) {
-      if (ball.cneterD-5 > walls[i].r+5 && ball.cneterD+5 < walls[i + 1].r-5) {
+      if (ball.cneterD-10 > walls[i].r+5 && ball.cneterD+10 < walls[i + 1].r-5) {
         _inswall = walls[i];
         _wall = walls[i + 1];
         return { _wall, _inswall };
@@ -34,7 +34,6 @@ let check = (walls, ball) => {
 
   // 进环内重新计算
   // if (!ball.out) {
-    // debugger
   let { _wall, _inswall } = Search(ball, walls);
 
   wall = _wall;
@@ -43,7 +42,7 @@ let check = (walls, ball) => {
   if(!wall&&!inswall) {
     ball.run(rad);
     return
-  } 
+  }
 
   let flag = _detect(ball, wall, inswall);
 
@@ -64,7 +63,7 @@ let _detect = (ball, wall, inswall) => {
     let _iy = Math.abs(inswall.y - ball.y);
 
     let id = Math.sqrt(_ix * _ix + _iy * _iy);
-    let k = Math.abs(ball.r + inswall.r)+5;
+    let k = Math.abs(ball.r + inswall.r)+10;
 
     // 内壁碰撞
     if (id <= k ) {

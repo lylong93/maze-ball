@@ -1,6 +1,7 @@
 import draw from "./draw";
 import Wall from "./wall";
 import Ball from "./ball";
+import device from "./device";
 
 let init = world => {
   if (world.getContext) {

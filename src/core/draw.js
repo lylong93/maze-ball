@@ -11,7 +11,7 @@ let draw = (canvas, walls, ball) => {
   walls.map(item => {
 
     ctx.beginPath();
-    ctx.lineWidth = 10;
+    ctx.lineWidth = 1;
     ctx.arc(item.x, item.y, item.r, item.sAngle, item.eAngle, false);
     ctx.stroke();
 
